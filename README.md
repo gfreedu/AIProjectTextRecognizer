@@ -11,7 +11,7 @@ Basic installation, recommend using **Python 3.x**
 
  1. Clone github repository
  2. Make a virtual environment using:
- `python -m venv .venv'`
+ `python -m venv .venv`
  
  3. Install required libraries using:
  `pip install -r requirements.txt`
