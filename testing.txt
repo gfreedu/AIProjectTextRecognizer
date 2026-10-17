@@ -1,0 +1,8 @@
+#ffffff
+#ffc400
+C:/Users/cream/Downloads/skeleton-running.gif
+C:/Users/cream/Documents/AiProjectClass12/uiFiles/animationAssets/yeayae.mp4
+0.5
+0.5
+True
+This file is a generated theme supported by the shadow wizard money gang(woah)
