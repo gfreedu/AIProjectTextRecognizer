@@ -27,6 +27,7 @@ Rectangle{
                 text:secondaryColor
                 width:parent.width/2
                 font:fonfam
+                color:secondaryColor
                 background:Rectangle{
                     color:"transparent"
                     border.width:2

@@ -149,7 +149,7 @@ ApplicationWindow {
                     anchors.top:parent.top
                     opacity:opacityValue
                     clicks.onClicked:{
-                        values.visible = true
+                        values.visible = !values.visible
                     }
                 }
             }

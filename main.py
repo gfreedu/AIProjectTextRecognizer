@@ -52,6 +52,8 @@ def setThemeValues(path:str):
     engine.rootObjects()[0].setProperty("videoOpacity",float(themValues[5].strip()))
     engine.rootObjects()[0].setProperty("coloringEnabled",bool(themValues[6].strip()))
 
+    backend.color = themValues[1].strip()
+
 def saveThemeValues(path:str,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool):
     with open(path,"w") as f:
         f.writelines(mainColor+"\n")
@@ -84,7 +86,7 @@ class Backend(QObject):
     busySignal = Signal(bool, arguments=["state"])
     setText = Signal(str,arguments=["textString"])
     errorSignal = Signal(str)
-    color = "#FFFFFF"
+    color = "#ffffff"
     font = ImageFont.truetype("uiFiles/fonts/deko.ttf",20)
 
     def __init__(self):
@@ -98,7 +100,7 @@ class Backend(QObject):
 
     def setLoading(self,busy:bool):     #Show loading screen
         self.busySignal.emit(busy)
-        
+
     def done(self):     #When background task is complete it runs this function
         self.setLoading(False)
 
