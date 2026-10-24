@@ -26,6 +26,7 @@ Rectangle{
                 Layout.alignment:Qt.AlignLeft
                 text:secondaryColor
                 width:parent.width/2
+                font:fonfam
                 background:Rectangle{
                     color:"transparent"
                     border.width:2

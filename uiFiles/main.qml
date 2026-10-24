@@ -154,18 +154,31 @@ ApplicationWindow {
                 }
             }
         }
-        Imagicle{
+        Rectangle{
+            color:mainColor
             width:300
             height:300
             border.width:2
+            border.color:secondaryColor
             anchors.centerIn:parent
-            luka:Qt.resolvedUrl("animationAssets/loading.gif")
             visible:busy
+            Imagicle{
+                id:loadingGif
+                anchors.fill:parent
+                luka:Qt.resolvedUrl("animationAssets/loading.gif")
+                visible:false
+            }
+            MultiEffect{
+                source:loadingGif
+                anchors.fill:parent
+                colorizationColor:secondaryColor
+                colorization:1
+            }
         }
         FontColorAndSlider{
             id:values
             height:100
-            width:200
+            width:300
             visible:false
         }
         CustomizationWindow{
