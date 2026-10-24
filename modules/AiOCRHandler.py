@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import OpenAI,OpenAIError
 from pydantic import BaseModel
 import os
 
@@ -34,35 +34,44 @@ class Model:
     def preprocessImage(self,path):
         self.imagePath = path
         self.endImg = encode_img(path)
-        
-    def getText(self)->str:
-        extension = os.path.basename(self.imagePath).split('.')[-1]
 
-        response = self.client.chat.completions.parse(
-            model=self.model,
-            messages=[
-                {
-                    "role":"user",
-                    "content":[
-                        {
-                            "type":"text",
-                            "text":"""What text is in the image. ONLY give me the identified text FROM TOP TO BOTTOM, 
-                            LEFT TO RIGHT and the bounding boxes where the text appears and nothing else."""
-                        },
-                        {
-                            "type":"image_url",
-                            "image_url":{
-                                "url":f"data:image/{extension};base64,{self.endImg}"
+    def checkError(errorCode:int) -> str:
+        match(errorCode):
+            case 429:
+                return ""
+        return str("None")
+    
+    def getText(self):
+        try:
+            extension = os.path.basename(self.imagePath).split('.')[-1]
+            response = self.client.chat.completions.parse(
+                model=self.model,
+                messages=[
+                    {
+                        "role":"user",
+                        "content":[
+                            {
+                                "type":"text",
+                                "text":"""What text is in the image. ONLY give me the identified text FROM TOP TO BOTTOM, 
+                                LEFT TO RIGHT and the bounding boxes where the text appears and nothing else."""
+                            },
+                            {
+                                "type":"image_url",
+                                "image_url":{
+                                    "url":f"data:image/{extension};base64,{self.endImg}"
+                                }
                             }
-                        }
-                    ]
-                }
-            ],
-            response_format=resultFormat
-        )
-
-        answer = response.choices[0].message.parsed
-        return answer
+                        ]
+                    }
+                ],
+                response_format=resultFormat
+            )
+        
+            answer = response.choices[0].message.parsed
+            return answer
+        except OpenAIError as e:
+            error = f"Error : {e.body["message"]},\nError code : {e.code},\nAdditional info : {self.checkError(int(e.code))}"
+            return error
 
 if __name__=="__main__":
     load_dotenv()

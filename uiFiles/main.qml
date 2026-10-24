@@ -154,27 +154,7 @@ ApplicationWindow {
                 }
             }
         }
-        Rectangle{
-            color:mainColor
-            width:300
-            height:300
-            border.width:2
-            border.color:secondaryColor
-            anchors.centerIn:parent
-            visible:busy
-            Imagicle{
-                id:loadingGif
-                anchors.fill:parent
-                luka:Qt.resolvedUrl("animationAssets/loading.gif")
-                visible:false
-            }
-            MultiEffect{
-                source:loadingGif
-                anchors.fill:parent
-                colorizationColor:secondaryColor
-                colorization:1
-            }
-        }
+        LoadingWindow{}
         FontColorAndSlider{
             id:values
             height:100
@@ -193,6 +173,9 @@ ApplicationWindow {
             width:250
             height:200
         }
+        ErrorWindow{
+            id:errorWindow
+        }
         Connections{
             target:backend
 
@@ -203,6 +186,9 @@ ApplicationWindow {
                 final.foundText = textString
                 finalImage.miku = ""
                 finalImage.luka = Qt.resolvedUrl("displayFile.png")
+            }
+            function onErrorSignal(errorMessage){
+
             }
         }
     }

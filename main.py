@@ -83,6 +83,7 @@ class Backend(QObject):
     #Signals/Functions fired to communicate from python backend to frontend
     busySignal = Signal(bool, arguments=["state"])
     setText = Signal(str,arguments=["textString"])
+    errorSignal = Signal(str)
     color = "#FFFFFF"
     font = ImageFont.truetype("uiFiles/fonts/deko.ttf",20)
 
@@ -104,6 +105,11 @@ class Backend(QObject):
     def getFinalTextAndImage(self):     #Get the text from image and draw bounding boxes on image
         finalText = ""
         answers = self.model.getText()
+
+        if isinstance(answers,str):     #Error handling
+            self.setLoading(False)
+            self.errorSignal.emit(answers)
+            return
         
         self.drawImage = Image.open(self.imgPath)
         draw = ImageDraw.Draw(self.drawImage)
