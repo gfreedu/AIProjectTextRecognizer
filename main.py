@@ -98,7 +98,7 @@ class Backend(QObject):
 
     def setLoading(self,busy:bool):     #Show loading screen
         self.busySignal.emit(busy)
-
+        
     def done(self):     #When background task is complete it runs this function
         self.setLoading(False)
 
@@ -164,7 +164,7 @@ class Backend(QObject):
         if baseUrl == "":
             baseUrl = defaultBaseUrl
         self.model = Model(apiKey,baseUrl,modelName)
-        if self.imgPath != "":
+        if hasattr(self.model,"imagePath"):
             self.setImageLocation(self.imgPath)
 
     @Slot(str)
@@ -172,6 +172,9 @@ class Backend(QObject):
         if hasattr(self.model,"imagePath"):
             slave = Worker(self.getFinalTextAndImage)
             self.poolroom.start(slave)
+            self.setLoading(True)
+        else:
+            self.errorSignal.emit("Pick an image first")
 
     @Slot(str)
     def openThemeFile(self,arg):

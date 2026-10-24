@@ -81,7 +81,6 @@ Rectangle{
         }
         onClicked: {
             backend.getTextButtonPressed(teto.text)
-            busy = true
         }
         
     }

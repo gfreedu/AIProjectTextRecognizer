@@ -25,7 +25,8 @@ Rectangle{
                 id:modelName
                 Layout.alignment:Qt.AlignLeft
                 text:"gemini-3.5-flash-lite"
-                implicitWidth:parent.width/1.5
+                implicitWidth:parent.width/1.4
+                font.family:fonfam
                 background:Rectangle{
                     color:"transparent"
                     border.width:2
@@ -50,7 +51,13 @@ Rectangle{
                 id:baseUrl
                 Layout.alignment:Qt.AlignLeft
                 text:"https://generativelanguage.googleapis.com/v1beta/openai/"
-                width:parent.width/2
+                implicitWidth:parent.width/1.5
+                font.family:fonfam
+                background:Rectangle{
+                    color:"transparent"
+                    border.width:2
+                    border.color:secondaryColor
+                }
                 color:secondaryColor
                 placeholderTextColor:Qt.lighter(secondaryColor)
                 selectionColor:Qt.darker(secondaryColor)
@@ -70,7 +77,13 @@ Rectangle{
                 id:apiKey
                 Layout.alignment:Qt.AlignLeft
                 text:"default(free api key)"
-                width:parent.width/2
+                implicitWidth:parent.width/1.45
+                font.family:fonfam
+                background:Rectangle{
+                    color:"transparent"
+                    border.width:2
+                    border.color:secondaryColor
+                }
                 color:secondaryColor
                 placeholderTextColor:Qt.lighter(secondaryColor)
                 selectionColor:Qt.darker(secondaryColor)
