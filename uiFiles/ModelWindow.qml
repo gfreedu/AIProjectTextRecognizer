@@ -25,7 +25,7 @@ Rectangle{
                 id:modelName
                 Layout.alignment:Qt.AlignLeft
                 text:"gemini-3.5-flash-lite"
-                width:parent.width/2
+                implicitWidth:parent.width/1.5
                 background:Rectangle{
                     color:"transparent"
                     border.width:2
@@ -86,6 +86,7 @@ Rectangle{
         miku:"Save and close"
         clicks.onClicked:{
             backend.setModelValues(modelName.text,baseUrl.text,apiKey.text)
+            parent.visible=false
         }
     }
 }

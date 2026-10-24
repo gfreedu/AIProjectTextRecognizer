@@ -5,7 +5,7 @@ from modules.AiOCRHandler import Model,log_output
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QFontDatabase
 from PySide6.QtQml import QQmlApplicationEngine
-from PySide6.QtCore import QTimer,QObject,Signal,Slot,QThreadPool,QRunnable
+from PySide6.QtCore import QObject,Signal,Slot,QThreadPool,QRunnable
 from PIL import ImageDraw,Image,ImageFont
 
 load_dotenv()
@@ -164,6 +164,8 @@ class Backend(QObject):
         if baseUrl == "":
             baseUrl = defaultBaseUrl
         self.model = Model(apiKey,baseUrl,modelName)
+        if self.imgPath != "":
+            self.setImageLocation(self.imgPath)
 
     @Slot(str)
     def getTextButtonPressed(self,arg):

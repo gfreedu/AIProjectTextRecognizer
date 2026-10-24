@@ -3,12 +3,14 @@ import QtQuick.Controls.Basic
 import QtQuick.Effects
 
 Rectangle{
+    property alias errorText:final.text
     width:300
     height:300
     anchors.centerIn:parent
     color:mainColor
     border.width:2
     border.color:secondaryColor
+    visible:false
 
     Image{
         id:sourceImage
@@ -32,10 +34,11 @@ Rectangle{
         TextArea{
             id:final
             anchors.fill:parent
-            placeholderText:"prepare thyself"
+            text:"This shouldnt be visible right now..."
             background:Rectangle{
                 color:"transparent"
             }
+            wrapMode:TextArea.wrap
             color:secondaryColor
             placeholderTextColor:Qt.lighter(secondaryColor)
             font.family:fonfam

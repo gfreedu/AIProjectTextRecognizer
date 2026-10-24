@@ -35,7 +35,7 @@ class Model:
         self.imagePath = path
         self.endImg = encode_img(path)
 
-    def checkError(errorCode:int) -> str:
+    def checkError(self,errorCode:int) -> str:
         match(errorCode):
             case 429:
                 return ""
@@ -64,13 +64,19 @@ class Model:
                         ]
                     }
                 ],
+                timeout=600,
                 response_format=resultFormat
             )
         
             answer = response.choices[0].message.parsed
             return answer
         except OpenAIError as e:
-            error = f"Error : {e.body["message"]},\nError code : {e.code},\nAdditional info : {self.checkError(int(e.code))}"
+            if not e.body:
+                return str(e)
+            if not e.body[0]["error"]:
+                return e.body[0]
+            errorList = e.body[0]["error"]
+            error = f"Error : {errorList['message']},\nError code : {e.code},\nAdditional info : {self.checkError(int(errorList["code"]))}"
             return error
 
 if __name__=="__main__":

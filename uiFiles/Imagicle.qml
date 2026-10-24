@@ -25,10 +25,12 @@ Rectangle{
         font.family:fonfam
         color:secondaryColor
     }
-    AnimatedImage{
+    Image{
         id:neru
         width:parent.width-4
         height:parent.height-4
         anchors.centerIn:parent
+        cache:false
+        asynchronous:false
     }
 }

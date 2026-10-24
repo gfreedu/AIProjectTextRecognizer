@@ -185,10 +185,12 @@ ApplicationWindow {
             function onSetText(textString){
                 final.foundText = textString
                 finalImage.miku = ""
+                finalImage.luka = ""
                 finalImage.luka = Qt.resolvedUrl("displayFile.png")
             }
             function onErrorSignal(errorMessage){
-
+                errorWindow.visible = true
+                errorWindow.errorText = errorMessage
             }
         }
     }
