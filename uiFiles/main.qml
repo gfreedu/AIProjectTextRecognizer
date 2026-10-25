@@ -93,8 +93,8 @@ ApplicationWindow {
             Video{
                 id:vid
                 source: videoLocation
-                height:parent.height
-                anchors.centerIn:parent
+                fillMode:VideoOutput.PreserveAspectCrop
+                anchors.fill:parent
                 autoPlay:true
                 opacity:videoOpacity
                 loops:MediaPlayer.Infinite

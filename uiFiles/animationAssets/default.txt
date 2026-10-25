@@ -1,6 +1,0 @@
-#000000
-#FFFFFF
-C:/Users/cream/Documents/AiProjectClass12/uiFiles/animationAssets/hmm.gif
-C:/Users/cream/Documents/AiProjectClass12/uiFiles/animationAssets/yeayae.mp4
-0.5
-This file is a generated theme supported by the shadow wizard money gang(woah)

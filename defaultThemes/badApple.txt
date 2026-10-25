@@ -1,0 +1,8 @@
+#000000
+#ffffff
+animationAssets/cube.gif
+C:/Users/cream/Documents/AiProjectClass12/uiFiles/animationAssets/badapple.mov
+0.5
+1.0
+False
+This file is a generated theme supported by the shadow wizard money gang(woah)
