@@ -14,7 +14,6 @@ Imagicle{
         anchors.fill:parent
         TextArea{
             id:final
-            anchors.fill:parent
             placeholderText:"prepare thyself"
             background:Rectangle{
                 color:"transparent"
