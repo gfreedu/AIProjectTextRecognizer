@@ -34,12 +34,6 @@ class Model:
     def preprocessImage(self,path):
         self.imagePath = path
         self.endImg = encode_img(path)
-
-    def checkError(self,errorCode:int) -> str:
-        match(errorCode):
-            case 429:
-                return ""
-        return str("None")
     
     def getText(self):
         try:
@@ -76,7 +70,7 @@ class Model:
             if not e.body[0]["error"]:
                 return e.body[0]
             errorList = e.body[0]["error"]
-            error = f"Model Error : {errorList['message']},\nError code : {e.code},\nAdditional info : {self.checkError(int(errorList["code"]))}"
+            error = f"Model Error : {errorList['message']},\nError code : {e.code}"
             return error
 
 if __name__=="__main__":
