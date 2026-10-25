@@ -66,6 +66,20 @@ def saveThemeValues(path:str,mainColor,secondaryColor,gifLocation,videoLocation,
         f.writelines(verificationKey+"\n")
     f.close()
 
+def getLastTheme():
+    try:
+        with open("LastOpened.txt","r") as file:
+                location = file.read()
+        setThemeValues(location)
+        file.close()
+    except FileNotFoundError:
+        setThemeValues("default.txt")
+
+def setLastThemeFile(location:str):
+    with open("LastOpened.txt","w") as file:
+            location = file.write(location)
+    file.close()
+
 #Multithreading ability from pyside6
 class Worker(QRunnable):
     def __init__(self,func,*args,**kwargs):
@@ -182,10 +196,12 @@ class Backend(QObject):
     def openThemeFile(self,arg):
         if arg != "":
             setThemeValues(arg)
+            setLastThemeFile(arg)
 
     @Slot(str,str,str,str,str,float,float,bool)
     def saveTheme(self,path,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool):
         saveThemeValues(path,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool)
+        setLastThemeFile(path)
     
 backend = Backend()
 
@@ -193,6 +209,6 @@ if not engine.rootObjects():
     sys.exit(-1)
 
 engine.rootObjects()[0].setProperty("backend",backend)
-setThemeValues("testing.txt")
+getLastTheme()
 
 sys.exit(app.exec())

@@ -70,8 +70,14 @@ ApplicationWindow {
         AnimatedImage{
             id:animatedGif
             anchors.fill:parent
-            source: "file:///"+gifLocation
+            source: Qt.resolvedUrl(gifLocation).toString().startsWith("file:///")?Qt.resolvedUrl(gifLocation):"file:///"+Qt.resolvedUrl(gifLocation)
             visible:showEffects&&!coloringEnabled
+            onStatusChanged:{
+                if (status == AnimatedImage.Error){
+                    errorWindow.visible = true
+                    errorWindow.errorText = "Gif Error : Gif failed to load check if gif still exists."
+                }
+            }
         }
         MultiEffect{
             anchors.fill:parent
@@ -93,6 +99,10 @@ ApplicationWindow {
                 opacity:videoOpacity
                 loops:MediaPlayer.Infinite
                 visible:showEffects
+                onErrorOccurred:function(errorCode,errorString){
+                    errorWindow.visible = true
+                    errorWindow.errorText = "Video Error : " + errorString
+                }
             }
         }
 

@@ -76,7 +76,7 @@ class Model:
             if not e.body[0]["error"]:
                 return e.body[0]
             errorList = e.body[0]["error"]
-            error = f"Error : {errorList['message']},\nError code : {e.code},\nAdditional info : {self.checkError(int(errorList["code"]))}"
+            error = f"Model Error : {errorList['message']},\nError code : {e.code},\nAdditional info : {self.checkError(int(errorList["code"]))}"
             return error
 
 if __name__=="__main__":
