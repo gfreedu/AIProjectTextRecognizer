@@ -170,8 +170,6 @@ ApplicationWindow {
         ModelWindow{
             id:modelWindow
             visible:false
-            width:250
-            height:200
         }
         ErrorWindow{
             id:errorWindow

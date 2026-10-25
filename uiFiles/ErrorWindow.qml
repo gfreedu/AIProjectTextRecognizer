@@ -33,12 +33,11 @@ Rectangle{
         anchors.fill:parent
         TextArea{
             id:final
-            anchors.fill:parent
             text:"This shouldnt be visible right now..."
             background:Rectangle{
                 color:"transparent"
             }
-            wrapMode:TextArea.wrap
+            wrapMode:TextArea.Wrap
             color:secondaryColor
             placeholderTextColor:Qt.lighter(secondaryColor)
             font.family:fonfam

@@ -1,31 +1,37 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls.Basic
 import QtQuick.Layouts
 
 Rectangle{
+    id:mainRect
     color:mainColor
     anchors.centerIn:parent
 
     border.width:2
     border.color:secondaryColor
 
+    width:250
+    height:200
+
     ColumnLayout{
-        anchors.fill:parent
+        anchors.fill:mainRect
+        anchors.margins:8
         RowLayout{
-            Layout.alignment:Qt.AlignCenter
-            height:parent.height/2
+            spacing: 1
+            Layout.fillWidth:true
+            Layout.preferredHeight:mainRect.height/3
             Text{
-                Layout.alignment:Qt.AlignRight
+                Layout.alignment: Qt.AlignRight
+                horizontalAlignment: TextInput.AlignHCenter
                 text:"Model:"
                 font.family:fonfam
-                width:parent.width/2
+                Layout.preferredWidth:mainRect.width/2
                 color:secondaryColor
             }
             TextField{
                 id:modelName
-                Layout.alignment:Qt.AlignLeft
                 text:"gemini-3.5-flash-lite"
-                implicitWidth:parent.width/1.4
+                Layout.fillWidth:true
                 font.family:fonfam
                 background:Rectangle{
                     color:"transparent"
@@ -38,20 +44,21 @@ Rectangle{
             }
         }
         RowLayout{
-            Layout.alignment:Qt.AlignCenter
-            height:parent.height/2
+            Layout.fillWidth:true
+            Layout.preferredHeight:mainRect.height/3
+            spacing: 1
             Text{
-                Layout.alignment:Qt.AlignRight
+                Layout.alignment: Qt.AlignRight
+                horizontalAlignment: TextInput.AlignHCenter
                 text:"Base url:"
                 font.family:fonfam
-                width:parent.width/2
+                Layout.preferredWidth:mainRect.width/2
                 color:secondaryColor
             }
             TextField{
                 id:baseUrl
-                Layout.alignment:Qt.AlignLeft
                 text:"https://generativelanguage.googleapis.com/v1beta/openai/"
-                implicitWidth:parent.width/1.5
+                Layout.fillWidth:true
                 font.family:fonfam
                 background:Rectangle{
                     color:"transparent"
@@ -64,20 +71,21 @@ Rectangle{
             }
         }
         RowLayout{
-            Layout.alignment:Qt.AlignCenter
-            height:parent.height/2
+            Layout.fillWidth:true
+            Layout.preferredHeight:mainRect.height/3
+            spacing: 1
             Text{
-                Layout.alignment:Qt.AlignRight
+                Layout.alignment: Qt.AlignRight
+                horizontalAlignment: TextInput.AlignHCenter
                 text:"Api key:"
                 font.family:fonfam
-                width:parent.width/2
+                Layout.preferredWidth:mainRect.width/2
                 color:secondaryColor
             }
             TextField{
                 id:apiKey
-                Layout.alignment:Qt.AlignLeft
                 text:"default(free api key)"
-                implicitWidth:parent.width/1.45
+                Layout.fillWidth:true
                 font.family:fonfam
                 background:Rectangle{
                     color:"transparent"
@@ -91,15 +99,15 @@ Rectangle{
         }
     }
     Recticle{
-        anchors.horizontalCenter:parent.horizontalCenter
-        y:parent.height+10
+        anchors.horizontalCenter:mainRect.horizontalCenter
+        y:mainRect.height+10
         width:120
         height:40
         kaiuki.font.pixelSize:10
         miku:"Save and close"
         clicks.onClicked:{
             backend.setModelValues(modelName.text,baseUrl.text,apiKey.text)
-            parent.visible=false
+            mainRect.visible=false
         }
     }
 }
