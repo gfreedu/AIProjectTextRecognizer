@@ -39,8 +39,8 @@ ApplicationWindow {
         property int prevX: 0
         property int prevY: 0
         anchors.fill: parent
-        onPressed: {prevX=mouse.x; prevY=mouse.y}
-        onPositionChanged:{
+        onPressed: function(mouse){prevX=mouse.x; prevY=mouse.y}
+        onPositionChanged:function(mouse){
             var deltaX = mouse.x - prevX;
             window.x += deltaX;
             prevX = mouse.x - deltaX;
