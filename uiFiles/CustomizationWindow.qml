@@ -9,6 +9,15 @@ Rectangle{
     border.width:2
     border.color:secondaryColor
 
+    function isValidColor(colorString) {
+        try {
+            let color = Qt.color(colorString)
+            return color !== undefined
+        } catch (error) {
+            return false
+        }
+    }
+
     ColumnLayout{
         anchors.fill:parent
         RowLayout{                          //Main color assignment
@@ -22,18 +31,37 @@ Rectangle{
             }
             TextField{
                 id:mainColorValue
+                property string lastColor:mainColor
+
                 Layout.alignment:Qt.AlignLeft
                 text:mainColor
                 width:parent.width/2
+
                 background:Rectangle{
                     color:"transparent"
                     border.width:2
                     border.color:secondaryColor
                 }
+
                 color:secondaryColor
                 placeholderTextColor:Qt.lighter(secondaryColor)
                 font.family:fonfam
                 selectionColor:Qt.darker(secondaryColor)
+
+                onTextEdited:{
+                    if (isValidColor(text)){
+                        lastColor = mainColor
+                        mainColor = text
+                    }else{
+                        mainColor = lastColor
+                    }
+                }
+                onEditingFinished:{
+                    if (isValidColor(text)){
+                        mainColor = text
+                        lastColor = mainColor
+                    }
+                }
             }
         }
         RowLayout{                          //Secondary color
@@ -47,18 +75,37 @@ Rectangle{
             }
             TextField{
                 id:secondaryColorValue
+                property string lastColor:mainColor
+
                 Layout.alignment:Qt.AlignLeft
                 text:secondaryColor
                 width:parent.width/2
+
                 background:Rectangle{
                     color:"transparent"
                     border.width:2
                     border.color:secondaryColor
                 }
+
                 color:secondaryColor
                 placeholderTextColor:Qt.lighter(secondaryColor)
                 font.family:fonfam
                 selectionColor:Qt.darker(secondaryColor)
+
+                onTextEdited:{
+                    if (isValidColor(text)){
+                        lastColor = secondaryColor
+                        secondaryColor = text
+                    }else{
+                        secondaryColor = lastColor
+                    }
+                }
+                onEditingFinished:{
+                    if (isValidColor(text)){
+                        secondaryColor = text
+                        lastColor = secondaryColor
+                    }
+                }
             }
         }
         RowLayout{                          //Opacity values
@@ -84,6 +131,9 @@ Rectangle{
                     parent: opacitySlider
                     text: opacitySlider.value.toFixed(1)
                 }
+                onMoved:{
+                    opacityValue = value
+                }
             }
         }
         RowLayout{                          //Video opacity value
@@ -100,7 +150,7 @@ Rectangle{
                 Layout.alignment:Qt.AlignLeft
                 width:parent.width/2
                 from:0
-                value:opacityValue
+                value:videoOpacity
                 to:1
                 background:CustomSlider{}
                 handle:CustomSliderHandle{}
@@ -108,6 +158,9 @@ Rectangle{
                     visible: backgroundOpacitySlider.pressed
                     parent: backgroundOpacitySlider
                     text: backgroundOpacitySlider.value.toFixed(1)
+                }
+                onMoved:{
+                    videoOpacity = value
                 }
             }
         }
@@ -122,8 +175,11 @@ Rectangle{
             }
             CustomCheckBox{
                 id:showEffectCheckBox
-                actuallyChecked:showEffects
                 Layout.alignment:Qt.AlignLeft
+                actuallyChecked:showEffects
+                onChangedValue : {
+                    showEffects = actuallyChecked
+                }
             }
         }
 
@@ -138,8 +194,12 @@ Rectangle{
             }
             CustomCheckBox{
                 id:colorVidsCheckBox
-                actuallyChecked:coloringEnabled
                 Layout.alignment:Qt.AlignLeft
+                actuallyChecked:coloringEnabled
+                onChangedValue : {
+                    console.log("Changed")
+                    coloringEnabled = actuallyChecked
+                }
             }
         }
 
@@ -151,6 +211,9 @@ Rectangle{
                 kaiuki.text:"Open video"
                 width:100
                 height:20
+                onFileSelectedEvent:{
+                    videoLocation = videoButton.path
+                }
             }
             FileSelect{
                 id:gifButton
@@ -158,6 +221,9 @@ Rectangle{
                 width:100
                 height:20
                 kaiuki.text:"Open gif"
+                onFileSelectedEvent:{
+                    gifLocation = gifButton.path
+                }
             }
         }
     }
@@ -169,15 +235,7 @@ Rectangle{
         kaiuki.font.pixelSize:10
         miku:"Save and close"
         clicks.onClicked:{
-            mainColor = mainColorValue.text
-            secondaryColor = secondaryColorValue.text
-            opacityValue = opacitySlider.value
-            videoOpacity = backgroundOpacitySlider.value
             parent.visible = false
-            showEffects = showEffectCheckBox.actuallyChecked
-            coloringEnabled = colorVidsCheckBox.actuallyChecked
-            videoLocation = videoButton.path == "" ? videoLocation : videoButton.path
-            gifLocation = gifButton.path == "" ? gifLocation : gifButton.path
             backend.setTextStyle(20,secondaryColor)
         }
     }

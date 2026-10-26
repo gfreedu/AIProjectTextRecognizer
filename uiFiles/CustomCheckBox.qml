@@ -8,6 +8,7 @@ Rectangle{
     property real ofseter:0
     property real aglet:0
     property bool actuallyChecked:false
+    signal changedValue()
 
     width:30
     height:width
@@ -63,6 +64,7 @@ Rectangle{
         }
         onClicked:{
             actuallyChecked = !actuallyChecked
+            changedValue()
         }
     }
 }

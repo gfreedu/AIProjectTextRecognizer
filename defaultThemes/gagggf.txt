@@ -1,0 +1,9 @@
+white
+black
+animationAssets/cube.gif
+animationAssets/yeayae.mp4
+1.0
+0.509756097560976
+True
+True
+This file is a generated theme supported by the shadow wizard money gang(woah)

@@ -5,4 +5,5 @@ C:/Users/cream/Documents/AiProjectClass12/uiFiles/animationAssets/badapple.mov
 0.5
 1.0
 False
+True
 This file is a generated theme supported by the shadow wizard money gang(woah)

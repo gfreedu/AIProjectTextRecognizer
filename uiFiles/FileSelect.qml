@@ -10,6 +10,7 @@ Rectangle{
     property alias kaiuki:teto
     property string path:""
     color:mainColor
+    signal fileSelectedEvent()
     
     border.width:2
     border.color:secondaryColor
@@ -88,6 +89,7 @@ Rectangle{
         title:"Select File"
         onAccepted:{
             path = selectedFile.toString().replace(/^(file:\/{3})/,"")
+            fileSelectedEvent()
         }
         onRejected:{
             path = ""

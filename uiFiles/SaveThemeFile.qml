@@ -90,7 +90,7 @@ Rectangle{
         fileMode:FileDialog.SaveFile
         onAccepted:{
             path = selectedFile.toString().replace(/^(file:\/{3})/,"")
-            backend.saveTheme(path,mainColor,secondaryColor,gifLocation,videoLocation,opacityValue,videoOpacity,coloringEnabled)
+            backend.saveTheme(path,mainColor,secondaryColor,gifLocation,videoLocation,opacityValue,videoOpacity,coloringEnabled,showEffects)
         }
         onRejected:{
             path = ""

@@ -5,4 +5,5 @@ animationAssets/yeayae.mp4
 0.6
 0.0
 False
+True
 This file is a generated theme supported by the shadow wizard money gang(woah)

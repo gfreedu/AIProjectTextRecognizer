@@ -4,8 +4,6 @@ import QtMultimedia
 
 Rectangle{
     id:yea
-    property real ofseter:0
-    property real aglet:0
     property alias miku:teto.text
     width:80
     height:70
@@ -22,8 +20,5 @@ Rectangle{
         font.family:fonfam
         color:secondaryColor
         fontSizeMode:Text.Fit
-    }
-    Image{
-        anchors.fill:parent
     }
 }

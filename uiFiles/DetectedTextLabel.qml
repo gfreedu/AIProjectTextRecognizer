@@ -1,12 +1,12 @@
 import QtQuick
 import QtQuick.Controls.Basic
 
-Imagicle{
+Plaintext{
     id:contorl
     property alias foundText:final.text
     implicitWidth:parent.parent.width-100
     miku:""
-    border.width:1
+    border.width:2
     opacity:opacityValue
 
     ScrollView{

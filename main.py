@@ -32,14 +32,17 @@ class workerSignal(QObject):
 #Load/Save themes
 defaultThemValues = ['#000000',
               "#FFFFFF",
-              "C:/Users/cream/Documents/AiProjectClass12/uiFiles/animationAssets/hmm.gif",
-              "C:/Users/cream/Documents/AiProjectClass12/uiFiles/animationAssets/yeayae.mp4",
-              "0.7"]
+              "uiFiles/animationAssets/hmm.gif",
+              "uiFiles/animationAssets/yeayae.mp4",
+              "0.7",
+              "0.7",
+              "True",
+              "True"]
 
 def setThemeValues(path:str):
     with open(path) as themes:
         themValues = themes.readlines()
-        if themValues[7].strip() != verificationKey:
+        if themValues[8].strip() != verificationKey:
             print("Invalid file theme found.")
             themValues = defaultThemValues
     themes.close()
@@ -50,11 +53,12 @@ def setThemeValues(path:str):
     engine.rootObjects()[0].setProperty("videoLocation",themValues[3].strip())
     engine.rootObjects()[0].setProperty("opacityValue",float(themValues[4].strip()))
     engine.rootObjects()[0].setProperty("videoOpacity",float(themValues[5].strip()))
-    engine.rootObjects()[0].setProperty("coloringEnabled",bool(themValues[6].strip()))
+    engine.rootObjects()[0].setProperty("coloringEnabled",themValues[6].strip() in "True")
+    engine.rootObjects()[0].setProperty("showEffects",themValues[7].strip() in "True")
 
     backend.color = themValues[1].strip()
 
-def saveThemeValues(path:str,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool):
+def saveThemeValues(path:str,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool,showVids):
     with open(path,"w") as f:
         f.writelines(mainColor+"\n")
         f.writelines(secondaryColor+"\n")
@@ -63,6 +67,7 @@ def saveThemeValues(path:str,mainColor,secondaryColor,gifLocation,videoLocation,
         f.writelines(str(opacity)+"\n")
         f.writelines(str(videoOpacity)+"\n")
         f.writelines(str(coloringBool)+"\n")
+        f.writelines(str(showVids)+"\n")
         f.writelines(verificationKey+"\n")
     f.close()
 
@@ -198,9 +203,9 @@ class Backend(QObject):
             setThemeValues(arg)
             setLastThemeFile(arg)
 
-    @Slot(str,str,str,str,str,float,float,bool)
-    def saveTheme(self,path,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool):
-        saveThemeValues(path,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool)
+    @Slot(str,str,str,str,str,float,float,bool,bool)
+    def saveTheme(self,path,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool,showVids):
+        saveThemeValues(path,mainColor,secondaryColor,gifLocation,videoLocation,opacity,videoOpacity,coloringBool,showVids)
         setLastThemeFile(path)
     
 backend = Backend()

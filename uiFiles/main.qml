@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import QtMultimedia
 import QtQuick.Effects
@@ -149,7 +149,7 @@ ApplicationWindow {
                 opacity:opacityValue
                 Layout.alignment:Qt.AlignCenter
                 fills:Image.PreserveAspectFit
-                height:390
+                height:360
                 Recticle{
                     width:40
                     height:width
@@ -164,6 +164,7 @@ ApplicationWindow {
                 }
             }
         }
+        
         LoadingWindow{}
         FontColorAndSlider{
             id:values

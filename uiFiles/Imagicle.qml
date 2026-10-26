@@ -13,9 +13,36 @@ Rectangle{
     width:80
     height:70
     color:mainColor
-    
+
     border.width:2
     border.color:secondaryColor
+
+    Flickable{
+        anchors.fill:parent
+        boundsBehavior: Flickable.StopAtBounds
+        flickableDirection: Flickable.HorizontalAndVerticalFlick 
+        clip:true
+
+        contentWidth: neru.width
+        contentHeight: neru.height
+
+        Image{
+            fillMode:Image.PreserveAspectFit
+            source:"file:///C:/Users/cream/Documents/AiProjectClass12/image.png"
+            id:neru
+            width: sourceSize.width
+            height: sourceSize.height
+            cache:false
+            asynchronous:false
+        }
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+        }
+
+        ScrollBar.horizontal: ScrollBar {
+            policy: ScrollBar.AsNeeded
+        }
+    }
 
     Text{
         id:teto
@@ -24,13 +51,5 @@ Rectangle{
         font.pixelSize:12
         font.family:fonfam
         color:secondaryColor
-    }
-    Image{
-        id:neru
-        width:parent.width-4
-        height:parent.height-4
-        anchors.centerIn:parent
-        cache:false
-        asynchronous:false
     }
 }
