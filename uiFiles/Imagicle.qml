@@ -28,7 +28,6 @@ Rectangle{
 
         Image{
             fillMode:Image.PreserveAspectFit
-            source:"file:///C:/Users/cream/Documents/AiProjectClass12/image.png"
             id:neru
             width: sourceSize.width
             height: sourceSize.height
