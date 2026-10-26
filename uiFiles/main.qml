@@ -100,6 +100,9 @@ ApplicationWindow {
                 loops:MediaPlayer.Infinite
                 visible:showEffects
                 onErrorOccurred:function(errorCode,errorString){
+                    if(errorCode===1){
+                        return
+                    }
                     errorWindow.visible = true
                     errorWindow.errorText = "Video Error : " + errorString
                 }
