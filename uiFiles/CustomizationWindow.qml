@@ -197,7 +197,6 @@ Rectangle{
                 Layout.alignment:Qt.AlignLeft
                 actuallyChecked:coloringEnabled
                 onChangedValue : {
-                    console.log("Changed")
                     coloringEnabled = actuallyChecked
                 }
             }

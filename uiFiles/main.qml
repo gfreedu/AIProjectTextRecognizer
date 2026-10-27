@@ -188,6 +188,70 @@ ApplicationWindow {
         ErrorWindow{
             id:errorWindow
         }
+
+        Rectangle{
+            Text{
+                anchors.fill:parent
+                verticalAlignment:Text.AlignTop
+                horizontalAlignment:Text.AlignHCenter
+
+                text:"Drop Image"
+                font.pixelSize:24
+                font.family:fonfam
+                color:secondaryColor
+            }
+            id:transparentBackground
+            color:"black"
+            visible:droppingWindow.visible
+            anchors.fill:parent
+            opacity:0.5
+        }
+
+        Rectangle{
+            id:droppingWindow
+            anchors.centerIn:parent
+            color:mainColor
+            border.width:2
+            border.color:secondaryColor
+
+            width:300
+            height:300
+            visible:false
+            Image{
+                id:uploadImage
+                anchors.fill:parent
+                source:Qt.resolvedUrl("animationAssets/DropImage.png")
+                visible:false
+            }
+            MultiEffect{
+                source:uploadImage
+                anchors.fill:parent
+                colorization:1
+                colorizationColor:secondaryColor
+            }
+        }
+
+        DropArea {
+            anchors.fill: parent
+
+            onEntered:{
+                droppingWindow.visible = true
+            }
+            onExited:{
+                droppingWindow.visible = false
+            }
+            
+            onDropped: function(drop) {
+                if (drop.hasUrls && drop.urls.length > 0) {
+                    const url = drop.urls[0].toString().replace(/^(file:\/{3})/,"")
+                    fileLocation = url
+                    backend.setImageLocation(url)
+                    busy = true
+                    droppingWindow.visible=false
+                }
+            }
+        }
+
         Connections{
             target:backend
 
