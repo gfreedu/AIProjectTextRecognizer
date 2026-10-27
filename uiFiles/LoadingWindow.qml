@@ -23,4 +23,9 @@ Rectangle{
         colorizationColor:secondaryColor
         colorization:1
     }
+    AnimatedImage{
+        anchors.fill:parent
+        source:Qt.resolvedUrl("animationAssets/loadingOverlay.gif")
+        playing:busy
+    }
 }
