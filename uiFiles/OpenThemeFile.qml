@@ -4,33 +4,35 @@ import QtQuick.Controls
 import QtMultimedia
 
 Rectangle{
-    id:yea
-    property real ofseter:0
-    property real aglet:0
     property alias kaiuki:teto
     property string path:""
-    color:mainColor
-    
-    border.width:2
-    border.color:secondaryColor
+    width:80
+    height:70
+    color:"transparent"
 
-    transform:Translate{
-        y:ofseter
-    }
+    Rectangle{
+        id:yea
+        width:parent.width
+        height:parent.height
+        property real ofseter:0
 
-    Behavior on ofseter{
-        NumberAnimation{
-            duration:120
+        color:mainColor
+        border.width:2
+        border.color:secondaryColor
+
+        Behavior on y{
+            NumberAnimation{
+                duration:120
+            }
         }
-    }
-
-    Text{
-        id:teto
-        anchors.centerIn:parent
-        text:"Hi!"
-        font.pixelSize:10
-        font.family:fonfam
-        color:secondaryColor
+        Text{
+            id:teto
+            anchors.centerIn:parent
+            text:"Hi!"
+            font.pixelSize:36
+            font.family:fonfam
+            color:secondaryColor
+        }
     }
 
     ParallelAnimation {
@@ -49,7 +51,6 @@ Rectangle{
             duration:200
         }
     }
-
     ParallelAnimation {
         id: rotateAnimEnd
 
@@ -71,11 +72,11 @@ Rectangle{
         hoverEnabled:true
         anchors.fill:parent
         onEntered: {
-            parent.ofseter=-2
+            yea.y=-2
             rotateAnim.start()
         }
         onExited: {
-            parent.ofseter=0
+            yea.y=0
             rotateAnimEnd.start()
         }
         onClicked: {
@@ -83,6 +84,7 @@ Rectangle{
         }
         
     }
+
     FileDialog{
         id:diadia
         title:"Select File"

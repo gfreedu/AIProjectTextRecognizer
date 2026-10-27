@@ -6,10 +6,8 @@ Rectangle{
     id:yea
     property real ofseter:0
     property real aglet:0
-    property alias miku:teto.text
     property alias kaiuki:teto
     property alias clicks:clicker
-    property string wannabecolor:mainColor
     width:80
     height:70
     color:mainColor

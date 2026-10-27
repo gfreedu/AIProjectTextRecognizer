@@ -104,7 +104,7 @@ Rectangle{
         width:120
         height:40
         kaiuki.font.pixelSize:10
-        miku:"Save and close"
+        kaiuki.text:"Save and close"
         clicks.onClicked:{
             backend.setModelValues(modelName.text,baseUrl.text,apiKey.text)
             mainRect.visible=false

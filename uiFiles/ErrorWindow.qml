@@ -55,7 +55,7 @@ Rectangle{
         width:120
         height:40
         kaiuki.font.pixelSize:10
-        miku:"Close"
+        kaiuki.text:"Close"
         clicks.onClicked:{
             parent.visible = false
         }
