@@ -75,7 +75,7 @@ Rectangle{
             }
             TextField{
                 id:secondaryColorValue
-                property string lastColor:mainColor
+                property string lastColor:secondaryColor
 
                 Layout.alignment:Qt.AlignLeft
                 text:secondaryColor
