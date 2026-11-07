@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from openai import OpenAI,OpenAIError
 from pydantic import BaseModel
 import os
+import mimetypes
 
 import base64
 
@@ -37,7 +38,7 @@ class Model:
     
     def getText(self):
         try:
-            extension = os.path.basename(self.imagePath).split('.')[-1]
+            mimeType,_ = mimetypes.guess_type(self.imagePath)
             response = self.client.chat.completions.parse(
                 model=self.model,
                 messages=[
@@ -53,7 +54,7 @@ class Model:
                             {
                                 "type":"image_url",
                                 "image_url":{
-                                    "url":f"data:image/{extension};base64,{self.endImg}"
+                                    "url":f"data:{mimeType};base64,{self.endImg}"
                                 }
                             }
                         ]
