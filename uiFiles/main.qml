@@ -118,7 +118,7 @@ ApplicationWindow {
                 opacity:opacityValue
                 implicitWidth:parent.parent.width-50
                 Layout.alignment:Qt.AlignCenter
-                miku:"Pick Image"
+                miku:"Pick File"
             }
             Plaintext{
                 opacity:opacityValue
@@ -258,11 +258,16 @@ ApplicationWindow {
             function onBusySignal(state){
                 busy=state
             }
-            function onSetText(textString){
+            function onSetText(textString,isPdf){
                 final.foundText = textString
-                finalImage.miku = ""
-                finalImage.luka = ""
-                finalImage.luka = Qt.resolvedUrl("displayFile.png")
+                if (isPdf){
+                    finalImage.miku = "Displaying contents of PDF file look up."
+                    finalImage.luka = ""
+                }else{
+                    finalImage.miku = ""
+                    finalImage.luka = ""
+                    finalImage.luka = Qt.resolvedUrl("displayFile.png")
+                }
             }
             function onErrorSignal(errorMessage){
                 errorWindow.visible = true

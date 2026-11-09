@@ -103,7 +103,7 @@ class Worker(QRunnable):
 class Backend(QObject):
     #Signals/Functions fired to communicate from python backend to frontend
     busySignal = Signal(bool, arguments=["state"])
-    setText = Signal(str,arguments=["textString"])
+    setText = Signal(str,bool,arguments=["textString",'isPdf'])
     errorSignal = Signal(str)
     color = "#ffffff"
     font = ImageFont.truetype("uiFiles/fonts/deko.ttf",20)
@@ -132,24 +132,36 @@ class Backend(QObject):
             self.errorSignal.emit(answers)
             return
         
-        self.drawImage = Image.open(self.imgPath)
-        draw = ImageDraw.Draw(self.drawImage)
-        width,height = self.drawImage.size
-        
-        for i in answers.detects:
-            x1 = i.rect.x1 * width/1000
-            y1 = i.rect.y1 * height/1000
-            x2 = i.rect.x2 * width/1000
-            y2 = i.rect.y2 * height/1000
+        pdfFound = False
 
-            coords = [x1,y1,x2,y2]
-            draw.rectangle(coords, outline=self.color, width=2)
-            draw.text((coords[0], coords[1]), i.text, fill=self.color,stroke_width=1,font=self.font)
-        
-            finalText += i.text + "\n"
+        if hasattr(answers,"detects"):
+            for i in answers.detects:
+                self.drawImage = Image.open(self.imgPath)
+                draw = ImageDraw.Draw(self.drawImage)
+                width,height = self.drawImage.size
 
-        self.drawImage.save("uiFiles/displayFile.png")
-        self.setText.emit(finalText)
+                x1 = i.rect.x1 * width/1000
+                y1 = i.rect.y1 * height/1000
+                x2 = i.rect.x2 * width/1000
+                y2 = i.rect.y2 * height/1000
+    
+                coords = [x1,y1,x2,y2]
+                draw.rectangle(coords, outline=self.color, width=2)
+                draw.text((coords[0], coords[1]), i.text, fill=self.color,stroke_width=1,font=self.font)
+            
+                finalText += i.text + "\n"
+    
+            self.drawImage.save("uiFiles/displayFile.png")
+        elif hasattr(answers,"foundTexts"):
+            for i,textsFound in enumerate(answers.foundTexts):
+                finalText += f"Page: {i+1}\n" + textsFound + "\n"
+            pdfFound = True
+        else:
+            for i,textsFound in answers.items():
+                finalText += f"Page: {i+1}\n" + textsFound + "\n"
+            pdfFound = True
+
+        self.setText.emit(finalText, pdfFound)
         self.setLoading(False)
 
     @Slot(str) #Functions triggered when communicating from frontend to backend
