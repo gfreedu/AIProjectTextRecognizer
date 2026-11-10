@@ -11,6 +11,7 @@ Rectangle{
     border.width:2
     border.color:secondaryColor
     visible:false
+    opacity:0
 
     Image{
         id:sourceImage
@@ -49,6 +50,48 @@ Rectangle{
         }
     }
 
+    // Entering animations
+    Behavior on opacity {
+        NumberAnimation{
+            duration:120
+        }
+    }
+
+    onVisibleChanged:{
+        if(visible){
+            opacity = 1
+            bounceTranslate.y = 30
+            bounceAnimation.start()
+        }else{
+            opacity = 0
+        }
+    }
+
+    transform: Translate{
+        id:bounceTranslate
+    }
+
+    SpringAnimation{
+        target:bounceTranslate
+        id:bounceAnimation
+        property:"y"
+        to:0
+        spring: 4
+        damping: 0.2
+    }
+
+    // Exit animation
+    NumberAnimation{
+        target:bounceTranslate
+        id:exitAnimation
+        property:"y"
+        to:30
+        duration:120
+        onFinished:{
+            visible = false
+        }
+    }
+
     Recticle{
         anchors.horizontalCenter:parent.horizontalCenter
         y:parent.height+10
@@ -57,7 +100,8 @@ Rectangle{
         kaiuki.font.pixelSize:10
         kaiuki.text:"Close"
         clicks.onClicked:{
-            parent.visible = false
+            parent.opacity = 0
+            exitAnimation.start()
         }
     }
 }

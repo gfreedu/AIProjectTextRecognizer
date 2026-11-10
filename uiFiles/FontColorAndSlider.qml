@@ -3,6 +3,7 @@ import QtQuick.Controls.Basic
 import QtQuick.Layouts
 
 Rectangle{
+    property alias miku:movementTranslate
     color:mainColor
     anchors.centerIn:parent
 
@@ -62,6 +63,20 @@ Rectangle{
             }
         }
     }
+    transform:Translate{
+        id:movementTranslate
+        x:30
+        Behavior on x{
+            NumberAnimation{
+                duration:200
+            }
+        }
+    }
+    Behavior on opacity{
+        NumberAnimation{
+            duration:200
+        }
+    }
     Recticle{
         anchors.horizontalCenter:parent.horizontalCenter
         y:110
@@ -71,7 +86,8 @@ Rectangle{
         kaiuki.text:"Save and close"
         clicks.onClicked:{
             backend.setTextStyle(pixelValue.value,colorValue.text)
-            parent.visible = false
+            parent.opacity = 0
+            movementTranslate.x = 30
         }
     }
 }

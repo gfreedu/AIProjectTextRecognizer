@@ -3,68 +3,51 @@ import QtQuick.Controls
 import QtMultimedia
 
 Rectangle{
-    id:yea
     property real ofseter:0
     property real aglet:0
     property alias kaiuki:teto
     property alias clicks:clicker
+    property real transitionDurations:120
+    property bool hovered
     width:80
     height:70
-    color:mainColor
-    
-    border.width:2
-    border.color:secondaryColor
+    color:"transparent"
 
-    transform:Translate{
-        y:ofseter
-    }
+    Rectangle{
+        id:yea
 
-    Behavior on ofseter{
-        NumberAnimation{
-            duration:120
+        anchors.fill:parent
+        color: hovered ? secondaryColor : mainColor
+        border.width:2
+        border.color:secondaryColor
+
+        Text{
+            id:teto
+            anchors.centerIn:parent
+            text:"Hi!"
+            font.pixelSize:36
+            font.family:fonfam
+            color:hovered ? mainColor : secondaryColor
+            Behavior on color{
+                ColorAnimation{
+                    duration:transitionDurations+80
+                }
+            }
         }
-    }
 
-    Text{
-        id:teto
-        anchors.centerIn:parent
-        text:"Hi!"
-        font.pixelSize:36
-        font.family:fonfam
-        color:secondaryColor
-    }
-
-    ParallelAnimation {
-        id: rotateAnim
-
-        ColorAnimation {
-            target: yea
-            property: "color"
-            to: secondaryColor
-            duration:200
+        transform:Translate{
+            id:movementTranslate
+            Behavior on y{
+                NumberAnimation{
+                    duration:transitionDurations
+                }
+            }
         }
-        ColorAnimation {
-            target: teto
-            property: "color"
-            to: mainColor
-            duration:200
-        }
-    }
 
-    ParallelAnimation {
-        id: rotateAnimEnd
-
-        ColorAnimation {
-            target: yea
-            property: "color"
-            to: mainColor
-            duration:200
-        }
-        ColorAnimation {
-            target: teto
-            property: "color"
-            to: secondaryColor
-            duration:200
+        Behavior on color{
+            ColorAnimation{
+                duration:transitionDurations+80
+            }
         }
     }
 
@@ -73,12 +56,12 @@ Rectangle{
         hoverEnabled:true
         anchors.fill:parent
         onEntered: {
-            parent.ofseter=-5
-            rotateAnim.start()
+            movementTranslate.y=-5
+            hovered = true
         }
         onExited: {
-            parent.ofseter=0
-            rotateAnimEnd.start()
+            movementTranslate.y=0
+            hovered = false
         }
     }
 }

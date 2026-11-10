@@ -4,12 +4,12 @@ import QtQuick.Effects
 
 Rectangle{
     color:mainColor
-    width:300
-    height:300
+    width:busy?300:250
+    height:busy?300:250
     border.width:2
     border.color:secondaryColor
     anchors.centerIn:parent
-    visible:busy
+    opacity:busy?1:0
     AnimatedImage{
         id:loadingGif
         anchors.fill:parent
@@ -27,5 +27,22 @@ Rectangle{
         anchors.fill:parent
         source:Qt.resolvedUrl("animationAssets/loadingOverlay.gif")
         playing:busy
+    }
+    Behavior on opacity{
+        NumberAnimation{
+            duration:200
+        }
+    }
+    Behavior on height{
+        SpringAnimation{
+            spring: 4
+            damping: 0.2
+        }
+    }
+    Behavior on width{
+        SpringAnimation{
+            spring: 4
+            damping: 0.2
+        }
     }
 }

@@ -51,6 +51,7 @@ ApplicationWindow {
         }
     }
 
+    // Actual background
     Rectangle{
         id:backgroundRect
         width:parent.width-hPadding
@@ -61,12 +62,14 @@ ApplicationWindow {
         opacity:opacityValue
     }
 
+    // Seen background
     Rectangle{
         width:parent.width-hPadding-4
         height:parent.height-vPadding-4
         anchors.centerIn:backgroundRect
         color:mainColor
 
+        // Gif
         AnimatedImage{
             id:animatedGif
             anchors.fill:parent
@@ -87,6 +90,7 @@ ApplicationWindow {
             visible:showEffects&&coloringEnabled
         }
 
+        // Video
         Item{
             anchors.fill:parent
             clip:true
@@ -118,7 +122,7 @@ ApplicationWindow {
                 opacity:opacityValue
                 implicitWidth:parent.parent.width-50
                 Layout.alignment:Qt.AlignCenter
-                miku:"Pick File"
+                kaiuki.text:"Pick File"
             }
             Plaintext{
                 opacity:opacityValue
@@ -131,7 +135,7 @@ ApplicationWindow {
                 opacity:opacityValue
                 implicitWidth:parent.parent.width-50
                 Layout.alignment:Qt.AlignCenter
-                miku:"Detect text"
+                kaiuki.text:"Detect text"
             }
             RowLayout{
                 Layout.fillWidth:true
@@ -162,28 +166,34 @@ ApplicationWindow {
                     anchors.top:parent.top
                     opacity:opacityValue
                     clicks.onClicked:{
-                        values.visible = !values.visible
+                        if(values.opacity === 0){
+                            values.opacity = 1
+                            values.miku.x = 0
+                        }else{
+                            values.opacity = 0
+                            values.miku.x = 30
+                        }
                     }
                 }
             }
         }
         
-        LoadingWindow{}
+        LoadingWindow{
+            id:loadWindow
+        }
         FontColorAndSlider{
             id:values
             height:100
             width:300
-            visible:false
+            opacity:0
         }
         CustomizationWindow{
             id:customize
             height:300
             width:300
-            visible:false
         }
         ModelWindow{
             id:modelWindow
-            visible:false
         }
         ErrorWindow{
             id:errorWindow
@@ -199,12 +209,21 @@ ApplicationWindow {
                 font.pixelSize:24
                 font.family:fonfam
                 color:secondaryColor
+                transform:Translate{
+                    id:textBoxMovementTranslate
+                    y:-30
+                    Behavior on y{
+                        NumberAnimation{
+                            duration:200
+                        }
+                    }
+                }
             }
             id:transparentBackground
             color:"black"
-            visible:droppingWindow.visible
             anchors.fill:parent
-            opacity:0.5
+            opacity:droppingWindow.opacity
+            clip:true
         }
 
         Rectangle{
@@ -213,10 +232,16 @@ ApplicationWindow {
             color:mainColor
             border.width:2
             border.color:secondaryColor
+            opacity:0
 
             width:300
             height:300
-            visible:false
+
+            Behavior on opacity{
+                NumberAnimation{
+                    duration:200
+                }
+            }
             Image{
                 id:uploadImage
                 anchors.fill:parent
@@ -229,16 +254,29 @@ ApplicationWindow {
                 colorization:1
                 colorizationColor:secondaryColor
             }
+            transform:Translate{
+                id:dropImageTranslate
+                y:30
+                Behavior on y{
+                    NumberAnimation{
+                        duration:200
+                    }
+                }
+            }
         }
 
         DropArea {
             anchors.fill: parent
 
             onEntered:{
-                droppingWindow.visible = true
+                droppingWindow.opacity = 1
+                textBoxMovementTranslate.y = 10
+                dropImageTranslate.y = 0
             }
             onExited:{
-                droppingWindow.visible = false
+                droppingWindow.opacity = 0
+                textBoxMovementTranslate.y = -30
+                dropImageTranslate.y = 30
             }
             
             onDropped: function(drop) {
@@ -285,11 +323,17 @@ ApplicationWindow {
         Recticle{
             width:hPadding-10
             height:vPadding-10
-            kaiuki.text:customize.visible?"Click 2 close":"Change Theme"
+            kaiuki.text:!(customize.opacity===0)?"Click 2 close":"Change Theme"
             kaiuki.font.pixelSize:10
             Layout.alignment:Qt.AlignTop | Qt.AlignHCenter
             clicks.onClicked:{
-                customize.visible = !customize.visible
+                if(customize.opacity === 0){
+                    customize.opacity = 1
+                    customize.miku.y = 0
+                }else{
+                    customize.opacity = 0
+                    customize.miku.y = -30
+                }
             }
         }
         SaveThemeFile{
@@ -338,15 +382,22 @@ ApplicationWindow {
             }
         }
     }
+
     Recticle{
         width:hPadding-10
         height:vPadding-10
         kaiuki.font.pixelSize:10
         anchors.bottom:parent.bottom
         x:parent.x+5
-        kaiuki.text:modelWindow.visible?"Click 2 close":"Change Model"
+        kaiuki.text:!(modelWindow.opacity===0)?"Click 2 close":"Change Model"
         clicks.onClicked:{
-            modelWindow.visible = !modelWindow.visible
+            if(modelWindow.opacity === 0){
+                modelWindow.opacity = 1
+                modelWindow.miku.x = 0
+            }else{
+                modelWindow.opacity = 0
+                modelWindow.miku.x = -30
+            }
         }
     }
 }

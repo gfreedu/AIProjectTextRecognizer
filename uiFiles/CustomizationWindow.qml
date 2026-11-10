@@ -3,11 +3,14 @@ import QtQuick.Controls.Basic
 import QtQuick.Layouts
 
 Rectangle{
+    property alias miku:movementTranslate
+
     color:mainColor
     anchors.centerIn:parent
 
     border.width:2
     border.color:secondaryColor
+    opacity:0
 
     function isValidColor(colorString) {
         try {
@@ -15,6 +18,21 @@ Rectangle{
             return color !== undefined
         } catch (error) {
             return false
+        }
+    }
+
+    transform:Translate{
+        y:-30
+        id:movementTranslate
+        Behavior on y{
+            NumberAnimation{
+                duration:200
+            }
+        }
+    }
+    Behavior on opacity{
+        NumberAnimation{
+            duration:150
         }
     }
 
@@ -234,7 +252,8 @@ Rectangle{
         kaiuki.font.pixelSize:10
         kaiuki.text:"Save and close"
         clicks.onClicked:{
-            parent.visible = false
+            parent.opacity = 0
+            movementTranslate.y = -30
             backend.setTextStyle(20,secondaryColor)
         }
     }

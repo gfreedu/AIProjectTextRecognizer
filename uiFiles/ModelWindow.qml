@@ -3,9 +3,12 @@ import QtQuick.Controls.Basic
 import QtQuick.Layouts
 
 Rectangle{
+    property alias miku:movementTranslate
+
     id:mainRect
     color:mainColor
     anchors.centerIn:parent
+    opacity:0
 
     border.width:2
     border.color:secondaryColor
@@ -43,6 +46,7 @@ Rectangle{
                 selectionColor:Qt.darker(secondaryColor)
             }
         }
+
         RowLayout{
             Layout.fillWidth:true
             Layout.preferredHeight:mainRect.height/3
@@ -70,6 +74,7 @@ Rectangle{
                 selectionColor:Qt.darker(secondaryColor)
             }
         }
+
         RowLayout{
             Layout.fillWidth:true
             Layout.preferredHeight:mainRect.height/3
@@ -98,6 +103,20 @@ Rectangle{
             }
         }
     }
+    transform:Translate{
+        x:-30
+        id:movementTranslate
+        Behavior on x{
+            NumberAnimation{
+                duration:200
+            }
+        }
+    }
+    Behavior on opacity{
+        NumberAnimation{
+            duration:150
+        }
+    }
     Recticle{
         anchors.horizontalCenter:mainRect.horizontalCenter
         y:mainRect.height+10
@@ -107,7 +126,8 @@ Rectangle{
         kaiuki.text:"Save and close"
         clicks.onClicked:{
             backend.setModelValues(modelName.text,baseUrl.text,apiKey.text)
-            mainRect.visible=false
+            parent.opacity = 0
+            movementTranslate.x = -30
         }
     }
 }

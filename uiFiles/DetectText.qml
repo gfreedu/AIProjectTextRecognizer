@@ -3,84 +3,9 @@ import QtQuick
 import QtQuick.Controls
 import QtMultimedia
 
-Rectangle{
-    property alias miku:teto.text
-    width:80
-    height:70
-    color:"transparent"
-
-    Rectangle{
-        id:yea
-        width:parent.width
-        height:parent.height
-        property real ofseter:0
-
-        color:mainColor
-        border.width:2
-        border.color:secondaryColor
-
-        Behavior on y{
-            NumberAnimation{
-                duration:120
-            }
-        }
-        Text{
-            id:teto
-            anchors.centerIn:parent
-            text:"Hi!"
-            font.pixelSize:36
-            font.family:fonfam
-            color:secondaryColor
-        }
-    }
-
-    ParallelAnimation {
-        id: rotateAnim
-
-        ColorAnimation {
-            target: yea
-            property: "color"
-            to: secondaryColor
-            duration:200
-        }
-        ColorAnimation {
-            target: teto
-            property: "color"
-            to: mainColor
-            duration:200
-        }
-    }
-    ParallelAnimation {
-        id: rotateAnimEnd
-
-        ColorAnimation {
-            target: yea
-            property: "color"
-            to: mainColor
-            duration:200
-        }
-        ColorAnimation {
-            target: teto
-            property: "color"
-            to: secondaryColor
-            duration:200
-        }
-    }
-
-    MouseArea{
-        id:mouseAreas
-        hoverEnabled:true
-        anchors.fill:parent
-        onEntered: {
-            yea.y=-5
-            rotateAnim.start()
-        }
-        onExited: {
-            yea.y=0
-            rotateAnimEnd.start()
-        }
-        onClicked: {
-            backend.getTextButtonPressed(teto.text)
-        }
+Recticle{
+    transitionDurations:120
+    clicks.onClicked:{
+        backend.getTextButtonPressed(kaiuki.text)
     }
 }
