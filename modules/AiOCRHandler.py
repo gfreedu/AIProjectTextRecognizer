@@ -26,7 +26,6 @@ def getTextFromPDF(file:str):
         textFoundOnPage = page.get_text()
         textFound[i] = textFoundOnPage if textFoundOnPage != "" else f"No text found on Page {i}."
 
-    print(textFound)
     return textFound, 0
 
 class point(BaseModel):
