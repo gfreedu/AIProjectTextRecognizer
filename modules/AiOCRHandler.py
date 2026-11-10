@@ -70,7 +70,7 @@ class Model:
 
             defaultPrompt = """
                 What text is in the image. ONLY give me the identified text FROM TOP TO BOTTOM, 
-                LEFT TO RIGHT and the bounding boxes where the text appears and nothing else.
+                LEFT TO RIGHT AND the bounding boxes where the text appears and nothing else.
                 Group lines in a paragraph together.Add a new line character where needed.
             """
             pdfPrompt = """

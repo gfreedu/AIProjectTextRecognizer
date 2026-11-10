@@ -11,6 +11,7 @@ Rectangle{
     border.width:2
     border.color:secondaryColor
     opacity:0
+    visible:opacity===0?false:true
 
     function isValidColor(colorString) {
         try {

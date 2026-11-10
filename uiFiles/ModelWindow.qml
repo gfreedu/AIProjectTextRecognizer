@@ -15,6 +15,7 @@ Rectangle{
 
     width:250
     height:200
+    visible:opacity===0?false:true
 
     ColumnLayout{
         anchors.fill:mainRect

@@ -9,6 +9,7 @@ Rectangle{
 
     border.width:2
     border.color:secondaryColor
+    visible:opacity===0?false:true
 
     ColumnLayout{
         anchors.fill:parent

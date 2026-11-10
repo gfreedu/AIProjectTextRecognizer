@@ -133,10 +133,10 @@ class Backend(QObject):
             return
         
         pdfFound = False
-
+        
         if hasattr(answers,"detects"):
+            self.drawImage = Image.open(self.imgPath)
             for i in answers.detects:
-                self.drawImage = Image.open(self.imgPath)
                 draw = ImageDraw.Draw(self.drawImage)
                 width,height = self.drawImage.size
 
@@ -148,7 +148,6 @@ class Backend(QObject):
                 coords = [x1,y1,x2,y2]
                 draw.rectangle(coords, outline=self.color, width=2)
                 draw.text((coords[0], coords[1]), i.text, fill=self.color,stroke_width=1,font=self.font)
-            
                 finalText += i.text + "\n"
     
             self.drawImage.save("uiFiles/displayFile.png")

@@ -3,8 +3,6 @@ import QtQuick.Controls
 import QtMultimedia
 
 Rectangle{
-    property real ofseter:0
-    property real aglet:0
     property alias kaiuki:teto
     property alias clicks:clicker
     property real transitionDurations:120

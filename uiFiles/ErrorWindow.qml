@@ -10,7 +10,7 @@ Rectangle{
     color:mainColor
     border.width:2
     border.color:secondaryColor
-    visible:false
+    visible:opacity===0?false:true
     opacity:0
 
     Image{

@@ -10,6 +10,8 @@ Rectangle{
     border.color:secondaryColor
     anchors.centerIn:parent
     opacity:busy?1:0
+    visible:opacity===0?false:true
+
     AnimatedImage{
         id:loadingGif
         anchors.fill:parent

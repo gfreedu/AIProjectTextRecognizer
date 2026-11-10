@@ -220,7 +220,7 @@ ApplicationWindow {
                 }
             }
             id:transparentBackground
-            color:"black"
+            color:mainColor
             anchors.fill:parent
             opacity:droppingWindow.opacity
             clip:true
@@ -287,6 +287,9 @@ ApplicationWindow {
                     busy = true
                     droppingWindow.visible=false
                 }
+                droppingWindow.opacity = 0
+                textBoxMovementTranslate.y = -30
+                dropImageTranslate.y = 30
             }
         }
 
