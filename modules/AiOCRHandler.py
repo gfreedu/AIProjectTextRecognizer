@@ -113,10 +113,19 @@ class Model:
         except OpenAIError as e:
             if not e.body:
                 return str(e)
-            if not e.body[0]["error"]:
-                return e.body[0]
-            errorList = e.body[0]["error"]
-            error = f"Model Error : {errorList['message']},\nError code : {e.code}"
+            
+            errorList = e.body.get("error",{}) if isinstance(e.body,dict) else e.body[0].get("error")
+
+            if errorList == {}:
+                message = e.body.get("message",{})
+                if message == {}:
+                    return f"Model Error : {message},\nError code : {e.code}"
+                return str(e.body)
+            
+            error = "Model error:\n"
+            for k,v in errorList.items():
+                error += f"{k} : {v}\n"
+                
             return error
 
 if __name__=="__main__":
